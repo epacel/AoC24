@@ -28,9 +28,30 @@ def getListsSimilarityScore(listx, listy):
         simScore += i * numi
     return simScore
 
+def totalSafeReports(file):
+    totalSafe = []
+    with open(file) as f:
+        for line in f:
+            safe = True
+            inner_list = [elt.strip() for elt in line.split(' ')]
+            level = int(inner_list[0])
+            safeValues = [1,2,3]
 
-sortInputToLists("input.txt")
-print(totalDiffOf2Lists(list1, list2))
-print(getListsSimilarityScore(list1, list2))
+            for i in range(len(inner_list)-1):
+                dif = level - int(inner_list[i+1])
+                if dif in safeValues:
+                    level = int(inner_list[i+1])
+                else:
+                    safe = False
+
+            totalSafe.append(safe)
+
+    print(totalSafe.count(True))
+
+
+totalSafeReports("input_day2.txt")
+# sortInputToLists("input_day1.txt")
+# print(totalDiffOf2Lists(list1, list2))
+# print(getListsSimilarityScore(list1, list2))
 
 
